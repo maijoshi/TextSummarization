@@ -70,8 +70,17 @@
    <div id="input" class="txt" align="center"><textarea class="form-control" rows="4" cols="500" id="inputText" placeholder="Enter some raw text to summarize."></textarea><br> </div>
 
   <div align="center"> <input id="btntest" type="button" value="Submit" 
-       onclick="return btntest_onclick()" /><div>
+       ><div>
 
+<p>  </p>
+<p>  </p>
+<br>
+<br>
+    <div align="center" id="summary">
+      <h1>Summary:</h1>
+      <p>  </p>
+      <div id="span"><span></span></div>
+    </div>
 
     
 
@@ -103,29 +112,37 @@
     <script type="text/javascript" src="8f343fb.js"></script>
     <script type="text/javascript">
 
-    window.alert("fuuuuuu");
-
-    function btntest_onclick() 
-{
-    window.alert("fuuuuuu");
-
-    unirest.post("https://cotomax-summarizer-text-v1.p.mashape.com/summarizer")
-    .header("X-Mashape-Key", "4TyLpOwldbmshFBGvbBFhIKj1WvFp1sSEkNjsny4RKHZFjfrGf")
-    .header("Content-Type", "application/json")
-    .header("Accept", "application/json")
-    .send({"Percent":"30","Language":"en","Text":"The United States Constitution is the supreme law of the United States of America. The Constitution, originally comprising seven articles, delineates the national frame of government. Its first three articles entrench the doctrine of the separation of powers, whereby the federal government is divided into three branches: the legislative, consisting of the bicameral Congress; the executive, consisting of the President; and the judicial, consisting of the Supreme Court and other federal courts. Articles Four, Five and Six entrench concepts of federalism, describing the rights and responsibilities of state governments and of the states in relationship to the federal government. Article Seven establishes the procedure subsequently used by the thirteen States to ratify it."})
-    .end(function (result) {
-    console.log(result.status, result.headers, result.body);
-});
-  window.alert(result.body);
-    
-}
-
-
 
 
     $(document).ready(function(){
-        //window.alert("1");
+        $("#summary").hide();
+        $('#btntest').on('click', function() {
+          var input = $('#inputText').val();
+          input2 = '{"Percent":"50","Language":"en","Text":"' + input + '"}';
+          window.alert(input2);
+
+
+
+          $.ajax({
+            url : "https://cotomax-summarizer-text-v1.p.mashape.com/summarizer",
+            type: "POST",
+            headers: {
+              'X-Mashape-Key':'4TyLpOwldbmshFBGvbBFhIKj1WvFp1sSEkNjsny4RKHZFjfrGf',
+              'Content-Type':'application/json',
+              'Accept':'application/json'
+            },
+            data: input2,
+            success: function(sum){
+             $("#summary").show();
+             window.alert("success")
+             $("span").text(sum);
+           },
+            error: function(err) {
+              window.alert("not working");
+            }
+        
+       });
+        });
         $('#search_mlat_form').on("submit", function() {
           //window.alert("2");
             select1 = $('select[name="form1[country1]"]').val();

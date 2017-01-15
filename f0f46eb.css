@@ -220,6 +220,9 @@ a:focus {
   color: #005580;
   text-decoration: underline;
 }
+.span {
+  width: 200px;
+}
 .img-rounded {
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
